@@ -1,195 +1,103 @@
 <script setup>
-  import { ref } from 'vue';
-  import { randomHsl } from '../utils/color.js';
-  import { copyPosition, copyRotation } from '../utils/aframe.js';
 
-  import BoxColorChanging from './BoxColorChanging.vue';
-  import PortalTeleporter from './PortalTeleporter.vue';
-  import ExitDoor from './ExitDoor.vue';
+import Anna from "./Anna.vue";
 
-  import '../aframe/bind-position.js';
-  import '../aframe/bind-rotation.js';
+import "../aframe/life-like-automaton.js";
+import "../aframe/physx-force-pushable.js";
+import "../aframe/clickable.js";
+import "../aframe/attack-action.js";
+import "../aframe/pokeball.js";
+import "../aframe/hp-system.js"
+import "../aframe/battle-zone.js";
+import "../aframe/emit-when-near.js";
+import "../aframe/test-anim.js";
 
-  defineProps({
-    scale: Number,
-  });
+defineProps({
+  scale: Number,
+});
 
-  const colorBoxLeft = ref(randomHsl());
-  const colorBoxRight = ref(randomHsl());
+const sceneEl = document.querySelector('a-scene');
 
-  function grabTheThing(evt) {
-    // if something already grabbed, switch it
-    const el = evt.target;
-    const grabbedEl = document.querySelector('[data-grabbed]');
-    if (grabbedEl) {
-      grabbedEl.removeAttribute('bind-position');
-      grabbedEl.removeAttribute('bind-rotation');
-      copyPosition(el, grabbedEl);
-      copyRotation(el, grabbedEl);
-      delete grabbedEl.dataset.grabbed;
-      delete grabbedEl.dataset.dropped;
-      if (el.dataset.dropped) {
-        grabbedEl.dataset.dropped = el.dataset.dropped;
-      }
-    }
-
-    if (el.sceneEl.is('vr-mode')) {
-      el.setAttribute('bind-position', 'target: #hand-right');
-      el.setAttribute('bind-rotation', 'target: #hand-right; convertToLocal: true');
-    } else {
-      el.setAttribute('bind-position', 'target: #dummy-hand-right');
-      el.setAttribute('bind-rotation', 'target: #dummy-hand-right; convertToLocal: true');
-    }
-    el.dataset.grabbed = true;
-    delete el.dataset.dropped;
-  }
-
-  function dropTheThing(evt) {
-    const grabbedEl = document.querySelector('[data-grabbed]');
-    // if nothing grabbed, return
-    if (!grabbedEl) return;
-
-    //drop it
-    grabbedEl.removeAttribute('bind-position');
-    grabbedEl.removeAttribute('bind-rotation');
-    copyPosition(evt.target, grabbedEl);
-    copyRotation(evt.target, grabbedEl);
-    delete grabbedEl.dataset.grabbed;
-
-    const dropZoneId = evt.target.id;
-    // if something was in the drop zone, grab it
-    const elInDropZone = document.querySelector(`[data-dropped="${dropZoneId}"]`);
-    if (elInDropZone) {
-      grabTheThing({ target: elInDropZone });
-    };
-
-    grabbedEl.dataset.dropped = dropZoneId;
-  }
+const handleQuest = (condition, quest) => {
+  if (!condition) sceneEl.emit(quest);
+}
 </script>
 
 <template>
-  <a-entity
-    gltf-model="#room"
-    rotation="0 90 0"
-    position="0 0 -5"
-    scale="1 1.1 1"
-  >
-
-    <a-entity
-      geometry="primitive: plane; height: 2; width: 2;"
-      position="2 2 3.9"
-      rotation="-180 0 0"
-      life-like-automaton="resolution: 64; maxGen: 30;  birthRule: 3,4,5,6,7; survivalRule: 5,6;"
-    ></a-entity>
-
-    <a-entity
-      geometry="primitive: plane; height: 2; width: 2;"
-      position="2 2 -3.9"
-      life-like-automaton="maxGen: 10; birthRule: 6,7,8; survivalRule: 4,5,6,7,8;"
-    ></a-entity>
-
-    <BoxColorChanging
-      id="box-left"
-      :scale="scale"
-      :color="colorBoxLeft"
-      position="7 0.5 -3"
-      @click="colorBoxRight = randomHsl()"
-      sound="src: #sound-1; on: click;"
-    />
-
-    <BoxColorChanging
-      id="box-right"
-      :scale="scale"
-      :color="colorBoxRight"
-      position="7 0.5 3"
-      @click="colorBoxLeft = randomHsl()"
-      sound="src: #sound-1; on: click;"
-    />
-
-    <a-entity
-      id="drop-zone-left"
-      geometry="primitive: sphere; phiLength: 180; radius: 0.5; thetaLength: 90;"
-      material="color: red; side: double"
-      position="-1.8 1 -4"
-      rotation="90 0 0"
-      clickable
-      @click="evt => dropTheThing(evt)"
-    ></a-entity>
-
-    <a-entity
-      id="drop-zone-right"
-      geometry="primitive: sphere; phiLength: 180; radius: 0.5; thetaLength: 90;"
-      material="color: purple; side: double"
-      position="-1.8 1 4"
-      rotation="90 0 180"
-      clickable
-      @click="evt => dropTheThing(evt)"
-    ></a-entity>
-
-    <a-box
-      id="box-1-grabbable"
-      color="red"
-      scale="0.3 0.3 0.3"
-      position="0 0.25 1"
-      clickable
-      @click="evt => grabTheThing(evt)"
-    ></a-box>
-
-    <a-box
-      id="box-2-grabbable"
-      color="purple"
-      scale="0.3 0.3 0.3"
-      position="0 0.25 -1"
-      clickable
-      @click="evt => grabTheThing(evt)"
-    ></a-box>
-
-    <PortalTeleporter
-      label="Enter the Life Cube Room"
-      material="src: #room-physic-texture"
-      position="-7.99 1.5 0"
-      rotation="0 90 0"
-      :rot="180"
-      :y="100"
-      :cameraEffect="true"
-      :cameraY="101.65"
-      :cameraZ="-2"
-      :cameraRot="-180"
-    />
-
-    <PortalTeleporter
-      label="Enter the Physic Room"
-      material="src: #room-physic-texture"
-      position="-6 1.5 -3.99"
-      rotation="0 0 0"
-      :rot="180"
-      :y="200"
-      :cameraEffect="true"
-      :cameraY="201"
-      :cameraX="3.2"
-      :cameraZ="0"
-      :cameraRot="-90"
-    />
+  <a-entity id="entity-pt-music" sound="src: #pallet-town-music; volume: 0.3; loop: true; positional: false"></a-entity>
+  <a-entity id="entity-battle-music" sound="src: #battle-music; volume: 0.3; loop: true; positional: false"></a-entity>
+  <a-entity id="entity-pokemon-out" sound="src: #pokemon-out; volume: 0.3; positional: false"></a-entity>
+  <a-entity gltf-model="#room" rotation="0 90 0" position="0 0 -5" scale="1 1 1">
   </a-entity>
 
-  <ExitDoor />
+  <a-entity id="entity-squirtle" visible="false" gltf-model="#squirtle" rotation="0 270 0" position="16 0 -3"
+    scale="1 1 1" pokemon data-name="squirtle">
+  </a-entity>
+  <a-entity id="entity-charmander" visible="false" gltf-model="#charmander" rotation="0 270 0" position="16 0 0"
+    scale="1 1 1" pokemon data-name="charmander">
+  </a-entity>
+  <a-entity id="entity-bulbasaur" visible="false" gltf-model="#bulbasaur" rotation="0 270 0" position="16 0 3"
+    scale="1 1 1" pokemon data-name="bulbasaur">
+  </a-entity>
 
-  <!-- Main room navigation mesh  -->
-  <a-entity
-    geometry="primitive: plane; height: 13.5; width: 6"
-    position="0 0.01 -4.75"
-    rotation="-90 0 0"
-    data-role="nav-mesh"
-    material="color: blue"
-    visible="false"
-  ></a-entity>
-  <a-entity
-    geometry="primitive: plane; height: .5; width: 5"
-    position="0 0.01 -11.75"
-    rotation="-90 0 0"
-    data-role="nav-mesh"
-    material="color: red"
-    visible="false"
-  ></a-entity>
+  <a-entity id="entity-professor-oak" gltf-model="#professor-oak" rotation="270 0 90" position="9.5 0 -14" scale="1 1 1"
+    visible="false" physx-body="type: static" emit-when-near="event: oakQuest; distance: 4"
+    @oakQuest="handleQuest(sceneEl.getAttribute('level-manager').oakQuestAccepted, 'oakQuest')">
+    <a-entity id="oak-exclamation" gltf-model="#exclamation" rotation="90 0 0" position="0 0 2.1" scale="1 1 1">
+    </a-entity>
+  </a-entity>
 
+  <a-entity id="entity-mallow" gltf-model="#mallow" rotation="-90 180 0" position="1.5 0 -1" scale="1 1 1"
+    physx-body="type: static" emit-when-near="event: mallowQuest; distance: 4"
+    @mallowQuest="handleQuest(sceneEl.getAttribute('level-manager').mallowQuestAccepted, 'mallowQuest')">
+    <a-entity id="mallow-exclamation" gltf-model="#exclamation" rotation="90 0 0" position="0 0 1.8" scale="1 1 1">
+    </a-entity>
+  </a-entity>
+
+  <Anna id="anna" rotation="0 90 0" position="-18 0 -6" scale="1.3 1.3 1.3" />
+
+  <a-entity id="enemy" gltf-model="#eevee" hp="maxHp:100;currentHp:100;posX:3; posY:2; posZ:0" rotation="0 0 0"
+    position="-22 -0.35 -4.6" scale="1 1 1"
+    animation__tilt="property: rotation; to: 90 0 0; dur: 1000; startEvents: pokemonDefeated"
+    animation__fade="property: components.material.material.opacity; from: 1; to: 0; dur: 500; startEvents: pokemonFaded; delay: 3000"
+    animation__startattack="property: position; to: -20 -0.35 -4.6;dur: 100; easing: linear; startEvents: start-attack;"
+    animation__endattack="property: position; to: -22 -0.35 -4.6;dur: 100; easing: linear; startEvents: end-attack;">
+    <a-entity id="entity-tackle" sound="src: #tackle; volume: 1; positional: false"></a-entity>
+  </a-entity>
+
+  <a-box id="start-anim" clickable test-anim color="blue" position="-7 1 -3" width="0.5" height="0.5" depth="0.5"></a-box>
+
+  <a-entity id="battleZone" rotation="-90 0 0" geometry="primitive: circle; radius: 1" position="-13 0.01 -4.6"
+    material="color: blue; opacity: 0.5" physx-body="type: static; emitCollisionEvents: true" battle-zone></a-entity>
+
+  <a-entity gltf-model="#pedestal" rotation="0 270 0" position="10 -0.5 -0.2" scale="1 1 1"
+    physx-body="type: static; emitCollisionEvents: true">
+  </a-entity>
+
+  <a-entity id="dialogue-box" position="0 1 -1" rotation="0 -180 0" scale="5 5 5" visible="false" dialogue-manager>
+
+    <a-plane id="dialogue-background" position="0 0 0" rotation="0 0 0" width="0.2" height="0.1" color="#000"
+      opacity="0.8"></a-plane>
+
+    <a-entity id="dialogue-content"></a-entity>
+
+    <a-sound id="dialogue-beep" src="#beep"></a-sound>
+  </a-entity>
+
+  <a-entity id="entity-pokeball" clickable gltf-model="#pokeball" pokeball="captured: false" rotation="0 90 0"
+    position="10 1.275 -0.2" scale="0.02 0.02 0.02">
+  </a-entity>
+
+  <a-entity position="0 -2 0" visible="false">
+    <a-entity geometry="primitive: plane; height: 42.1; width: 45.1" rotation="-90 0 0" material="color: purple"
+      physx-body="type: static"></a-entity>
+    <a-entity geometry="primitive: plane; height: 10.1; width: 45.1" rotation="0 0 0" position="0 6 -27"
+      material="color: purple" physx-body="type: static"></a-entity>
+    <a-entity geometry="primitive: plane; height: 10.1; width: 45.1" rotation="0 180 0" position="0 6 15.5"
+      material="color: purple" physx-body="type: static"></a-entity>
+    <a-entity geometry="primitive: plane; height: 10.1; width: 45.1" rotation="0 90 0" position="-21 6 -4"
+      material="color: purple" physx-body="type: static"></a-entity>
+    <a-entity geometry="primitive: plane; height: 10.1; width: 45.1" rotation="0 -90 0" position="23 6 -6"
+      material="color: purple" physx-body="type: static"></a-entity>
+  </a-entity>
 </template>
