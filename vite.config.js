@@ -11,7 +11,7 @@ const fullReloadPlugin = {
 
 export default defineConfig(({ command, mode }) => {
   const config = {
-    base: "/aframe-vue-boilerplate/",
+    base: "/",
     plugins: [
       basicSsl(),
       vue({
@@ -28,6 +28,9 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         "@": "/src",
       },
+    },
+    server: {
+      cors: false,
     },
   };
 
