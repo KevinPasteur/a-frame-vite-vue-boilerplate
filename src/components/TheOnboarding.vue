@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Howl, Howler } from 'howler';
+import { ref } from "vue";
+import { Howl, Howler } from "howler";
 
 defineProps({
   loaded: Boolean,
@@ -10,8 +10,11 @@ const showOnboarding = ref(true);
 
 function enterScene() {
   showOnboarding.value = false;
-  if (AFRAME.utils.device.checkHeadsetConnected() && !AFRAME.utils.device.isMobile()) {
-    document.querySelector('a-scene').enterVR();
+  if (
+    AFRAME.utils.device.checkHeadsetConnected() &&
+    !AFRAME.utils.device.isMobile()
+  ) {
+    document.querySelector("a-scene").enterVR();
   }
   playPalletTownMusic();
 }
@@ -19,6 +22,7 @@ function enterScene() {
 // Fonction pour jouer la musique
 function playPalletTownMusic() {
   const music = document.querySelector("#entity-pt-music");
+  console.log(music);
   music.components.sound.playSound();
   /*const music = new Howl({
     src: ['/assets/pallet_town.mp3'],
@@ -49,8 +53,8 @@ function playPalletTownMusic() {
               backward + Gaze cursor for click
             </li>
             <li>
-              VR/AR – walk + Teleport (Grip for grab and laser for
-              click) + Gaze cursor for click
+              VR/AR – walk + Teleport (Grip for grab and laser for click) + Gaze
+              cursor for click
             </li>
           </ul>
         </section>
@@ -59,61 +63,109 @@ function playPalletTownMusic() {
             <i>Included</i>
           </dt>
           <dt>
-            <a href="https://github.com/c-frame/aframe-extras" target="_blank">aframe-extras controls and
-              animation-mixer</a>
+            <a href="https://github.com/c-frame/aframe-extras" target="_blank"
+              >aframe-extras controls and animation-mixer</a
+            >
           </dt>
           <dd>
-            <a href="https://github.com/c-frame/aframe-extras/blob/master/LICENSE" target="_blank">MIT License</a>
+            <a
+              href="https://github.com/c-frame/aframe-extras/blob/master/LICENSE"
+              target="_blank"
+              >MIT License</a
+            >
           </dd>
 
           <dt>
-            <a href="https://github.com/c-frame/physx" target="_blank">aframe physx</a>
+            <a href="https://github.com/c-frame/physx" target="_blank"
+              >aframe physx</a
+            >
           </dt>
           <dd>
-            <a href="https://github.com/c-frame/aframe-extras/blob/master/LICENSE" target="_blank">MIT License</a>
+            <a
+              href="https://github.com/c-frame/aframe-extras/blob/master/LICENSE"
+              target="_blank"
+              >MIT License</a
+            >
           </dd>
 
           <dt>
-            <a href="https://github.com/jure/aframe-blink-controls/" target="_blank">aframe-blink-controls</a>
+            <a
+              href="https://github.com/jure/aframe-blink-controls/"
+              target="_blank"
+              >aframe-blink-controls</a
+            >
           </dt>
           <dd>
-            <a href="https://github.com/jure/aframe-blink-controls/blob/main/LICENSE" target="_blank">MIT License</a>
+            <a
+              href="https://github.com/jure/aframe-blink-controls/blob/main/LICENSE"
+              target="_blank"
+              >MIT License</a
+            >
           </dd>
 
           <dt>
-            <a href="https://github.com/diarmidmackenzie/aframe-multi-camera/" target="_blank">aframe-multi-camera</a>
+            <a
+              href="https://github.com/diarmidmackenzie/aframe-multi-camera/"
+              target="_blank"
+              >aframe-multi-camera</a
+            >
           </dt>
           <dd>
-            <a href="https://github.com/diarmidmackenzie/aframe-multi-camera/blob/main/LICENSE" target="_blank">MIT
-              License</a>
+            <a
+              href="https://github.com/diarmidmackenzie/aframe-multi-camera/blob/main/LICENSE"
+              target="_blank"
+              >MIT License</a
+            >
           </dd>
 
           <dt>
-            <a href=" https://github.com/AdaRoseCannon/aframe-xr-boilerplate"
-              target="_blank">simple-navmesh-constraint</a>
+            <a
+              href=" https://github.com/AdaRoseCannon/aframe-xr-boilerplate"
+              target="_blank"
+              >simple-navmesh-constraint</a
+            >
+          </dt>
+          <dd>By Ada Rose Cannon under MIT License</dd>
+
+          <dt>
+            <a
+              href="https://sketchfab.com/3d-models/vr-gallery-1ac32ed62fdf424498acc146fad31f7e"
+              target="_blank"
+              >VR Gallery</a
+            >
           </dt>
           <dd>
-            By Ada Rose Cannon under MIT License
+            by
+            <a href="https://sketchfab.com/mvrc.art" target="_blank"
+              >Maxim Mavrichev</a
+            >
+            under
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              >CC BY 4.0</a
+            >
           </dd>
 
           <dt>
-            <a href="https://sketchfab.com/3d-models/vr-gallery-1ac32ed62fdf424498acc146fad31f7e" target="_blank">VR
-              Gallery</a>
+            <a
+              href="https://sketchfab.com/3d-models/3d-gallery-for-vr-projects-68f77ed8558c4bd59e0a13e2cc9d1fd1"
+              target="_blank"
+              >Physic room model</a
+            >
           </dt>
           <dd>
-            by <a href="https://sketchfab.com/mvrc.art" target="_blank">Maxim Mavrichev</a>
-            under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
+            by
+            <a href="https://sketchfab.com/tekuto1s" target="_blank"
+              >tekuto1s</a
+            >
+            under
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              >CC BY 4.0</a
+            >
           </dd>
-
-          <dt>
-            <a href="https://sketchfab.com/3d-models/3d-gallery-for-vr-projects-68f77ed8558c4bd59e0a13e2cc9d1fd1"
-              target="_blank">Physic room model</a>
-          </dt>
-          <dd>
-            by <a href="https://sketchfab.com/tekuto1s" target="_blank">tekuto1s</a>
-            under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
-          </dd>
-
         </dl>
       </div>
     </div>
@@ -122,7 +174,7 @@ function playPalletTownMusic() {
 
 <style scoped>
 h1 {
-  font-size: 1.5rem
+  font-size: 1.5rem;
 }
 
 a {
@@ -162,7 +214,7 @@ a {
   overflow: auto;
 }
 
-#onboarding>* {
+#onboarding > * {
   margin: 0 auto;
   max-width: 50rem;
   width: calc(100vw - 10rem);
@@ -181,8 +233,5 @@ a {
   border: none;
   cursor: pointer;
 }
-</style>#onboarding li {
-#onboarding li {
-  font-size: 1rem;
-  text-align: left;
-}
+</style>
+#onboarding li { #onboarding li { font-size: 1rem; text-align: left; }
