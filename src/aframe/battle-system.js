@@ -44,6 +44,15 @@ AFRAME.registerComponent("battle-system", {
           posZ: 0,
           rotationY: 180,
         });
+
+        pokemonEl.setAttribute(
+          "animation__startattack",
+          "property: position; to: -15 -0.35 -4.6;dur: 100; easing: linear; startEvents: start-attack;"
+        );
+        pokemonEl.setAttribute(
+          "animation__endattack",
+          "property: position; to: -13 0.01 -4.6;dur: 100; easing: linear; startEvents: end-attack;"
+        );
         this.el.sceneEl.appendChild(pokemonEl);
       } else {
         console.log("No Pokemon captured to start a battle with.");
@@ -56,18 +65,20 @@ AFRAME.registerComponent("battle-system", {
     // Logique d'attaque du joueur
 
     const enemyEl = this.el.sceneEl.querySelector("#enemy");
+    const pokemonPlayer = this.el.sceneEl.querySelector("#myPokemon");
     let enemyHp = enemyEl.getAttribute("hp").currentHp;
 
     console.log(evt.detail.attackName);
     console.log(evt.detail);
+
+    pokemonPlayer.addEventListener("animationcomplete", (evt) => {
+      pokemonPlayer.emit("end-attack", null, false);
+    });
+
+    document.getElementById("entity-tackle").components.sound.playSound();
+    pokemonPlayer.emit("start-attack", null, false);
+
     const damage = evt.detail.damage;
-
-    enemyEl.emit("tackle", null, false); // Déclenche l'animation "Tackle"
-
-    setTimeout(() => {
-      enemyEl.emit("tackleReturn", null, false); // Ramène Eevee à sa position originale après l'attaque
-      // Continuez ici avec la logique de fin du tour de l'ennemi
-    }, 400); // Ce délai devrait être égal à la durée totale des animations
 
     enemyHp = Math.max(enemyHp - damage, 0);
     enemyEl.setAttribute("hp", "currentHp", enemyHp);
