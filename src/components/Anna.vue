@@ -3,12 +3,6 @@ import "../aframe/emit-when-near.js";
 import "../aframe/event-set.js";
 import "../aframe/clickable.js";
 
-defineProps({
-  scale: Number,
-  color: String,
-});
-
-
 const annaQuest = () => {
   const sceneEl = document.querySelector('a-scene');
   const capturedPokemon =
