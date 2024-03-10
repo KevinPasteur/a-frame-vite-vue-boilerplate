@@ -93,30 +93,6 @@ function playPalletTownMusic() {
           <dd>By Ada Rose Cannon under MIT License</dd>
 
           <dt>
-            <a href="https://sketchfab.com/3d-models/vr-gallery-1ac32ed62fdf424498acc146fad31f7e" target="_blank">VR
-              Gallery</a>
-          </dt>
-          <dd>
-            by
-            <a href="https://sketchfab.com/mvrc.art" target="_blank">Maxim Mavrichev</a>
-            under
-            <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
-          </dd>
-
-          <dt>
-            <a href="https://sketchfab.com/3d-models/3d-gallery-for-vr-projects-68f77ed8558c4bd59e0a13e2cc9d1fd1"
-              target="_blank">Physic room model</a>
-          </dt>
-          <dd>
-            by
-            <a href="https://sketchfab.com/tekuto1s" target="_blank">tekuto1s</a>
-            under
-            <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
-          </dd>
-
-
-
-          <dt>
             <a href="#" target="_blank">Sky</a>
           </dt>
           <dd>
