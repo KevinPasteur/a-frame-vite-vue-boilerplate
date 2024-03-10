@@ -22,7 +22,7 @@ const allAssetsLoaded = ref(false);
       delay: 1000;
       useDefaultScene: false;
       wasmUrl: lib/physx.release.wasm;
-    " obb-collider="showColliders: false" stats level-manager battle-system>
+    " obb-collider="showColliders: false" level-manager battle-system>
     <a-assets @loaded="allAssetsLoaded = true">
 
       <a-asset-item id="room" src="assets/pallet_town.glb"></a-asset-item>
