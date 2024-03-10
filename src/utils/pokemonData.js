@@ -1,7 +1,7 @@
 const pokemonAttacksDB = {
   charmander: [
     { name: "Flammeche", damage: 40, color: "red" },
-    { name: "Griffe", damage: 40, color: "grey" },
+    { name: "Charge", damage: 40, color: "grey" },
   ],
   squirtle: [
     { name: "Pistolet a O", damage: 40, color: "blue" },

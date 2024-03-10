@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { Howl, Howler } from "howler";
 
 defineProps({
   loaded: Boolean,
@@ -22,15 +21,7 @@ function enterScene() {
 // Fonction pour jouer la musique
 function playPalletTownMusic() {
   const music = document.querySelector("#entity-pt-music");
-  console.log(music);
   music.components.sound.playSound();
-  /*const music = new Howl({
-    src: ['/assets/pallet_town.mp3'],
-    autoplay: true,
-    loop: true,
-    volume: 0.2,
-  });
-  music.play();*/
 }
 </script>
 
@@ -52,14 +43,10 @@ function playPalletTownMusic() {
           </p>
           <p>Prenez ensuite part à votre premier combat et montrez au monde entier que vous êtes digne de devenir le
             prochain Maître Pokémon.</p>
-          <h4>Support</h4>
+          <h4>Prise en charge</h4>
           <ul>
             <li>
-              Desktop - Clavier pour se déplacer (WASD ou flèches directionnelles) + Souris pour regarder autour de soi
-              et clic gauche pour déplacer la pokéball et faire des choix
-            </li>
-            <li>
-              Casque VR - Utiliser les contrôles de votre casque pour vous déplacer et regarder autour de vous grâce au
+              Casque VR - Utiliser les contrôles de votre casque pour vous déplacer et regarder autour de vous, grâce au
               joystick gauche un TP vous permet de naviguer dans le monde, utilisez ensuite les gâchettes pour pouvoir
               attraper la pokéball et valider vos choix avec le laser.
             </li>

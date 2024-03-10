@@ -58,7 +58,7 @@ AFRAME.registerComponent("dialogue-manager", {
 
     const titleEntity = document.createElement("a-text");
     titleEntity.setAttribute("value", quest.title);
-    titleEntity.setAttribute("color", "#FFF");
+    titleEntity.setAttribute("color", "#f2f2f2");
     titleEntity.setAttribute("align", "center");
     titleEntity.setAttribute("position", "0 0.04 0");
     titleEntity.setAttribute("width", "0.3");
@@ -66,7 +66,7 @@ AFRAME.registerComponent("dialogue-manager", {
 
     const messageEntity = document.createElement("a-text");
     messageEntity.setAttribute("value", quest.message);
-    messageEntity.setAttribute("color", "#FFF");
+    messageEntity.setAttribute("color", "#f2f2f2");
     messageEntity.setAttribute("align", "center");
     messageEntity.setAttribute("position", "0 0.015 0");
     messageEntity.setAttribute("width", "0.20");
@@ -75,7 +75,7 @@ AFRAME.registerComponent("dialogue-manager", {
     if (acceptButton) {
       const acceptText = document.createElement("a-text");
       acceptText.setAttribute("value", "Accepter la quete");
-      acceptText.setAttribute("color", "#FFF");
+      acceptText.setAttribute("color", "#f2f2f2");
       acceptText.setAttribute("align", "center");
       acceptText.setAttribute("position", "0 -0.01 0");
       acceptText.setAttribute("width", "0.20");
@@ -102,7 +102,7 @@ AFRAME.registerComponent("dialogue-manager", {
 
     const messageEntity = document.createElement("a-text");
     messageEntity.setAttribute("value", "Quelle attaque utiliser ?");
-    messageEntity.setAttribute("color", "#FFF");
+    messageEntity.setAttribute("color", "#f2f2f2");
     messageEntity.setAttribute("align", "center");
     messageEntity.setAttribute("position", "0 0.04 0");
     messageEntity.setAttribute("width", "0.25");
@@ -119,7 +119,7 @@ AFRAME.registerComponent("dialogue-manager", {
       const position = buttonsPosition[index];
       const messageAttackEntity = document.createElement("a-text");
       messageAttackEntity.setAttribute("value", `${element.name}`);
-      messageAttackEntity.setAttribute("color", "#FFF");
+      messageAttackEntity.setAttribute("color", "#f2f2f2");
       messageAttackEntity.setAttribute("align", "center");
       messageAttackEntity.setAttribute(
         "position",

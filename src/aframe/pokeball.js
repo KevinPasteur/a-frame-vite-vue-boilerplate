@@ -22,6 +22,13 @@ AFRAME.registerComponent("pokeball", {
     if (!this.data.captured && hitEl.hasAttribute("pokemon")) {
       this.data.captured = true;
 
+      const captureSound = document.getElementById(
+        "entity-pokemon-capture-sound"
+      );
+      if (captureSound) {
+        captureSound.components.sound.playSound();
+      }
+
       const pokemonData = {
         name: hitEl.dataset.name,
       };

@@ -22,7 +22,6 @@ AFRAME.registerComponent("hp", {
       z: this.data.rotationZ,
     };
 
-    // Crée une barre de vie
     const hpBar = document.createElement("a-box");
     hpBar.setAttribute("color", "green");
     hpBar.setAttribute("depth", "0.2");
@@ -37,8 +36,6 @@ AFRAME.registerComponent("hp", {
 
     this.el.appendChild(hpBar);
     this.hpBar = hpBar;
-
-    console.log(this.hpBar);
   },
   update: function () {
     const hpRatio = this.data.currentHp / this.data.maxHp;

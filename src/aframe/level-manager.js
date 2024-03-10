@@ -23,7 +23,6 @@ AFRAME.registerComponent("level-manager", {
     this.data.capturedPokemon = pokemonData;
     this.data.attacks = pokemonAttacksDB[pokemonData.name];
 
-    //Faire disparaître le point d'exclamation d'Anna
     this.el.sceneEl
       .querySelector("#anna-exclamation-grey")
       .setAttribute("visible", "false");

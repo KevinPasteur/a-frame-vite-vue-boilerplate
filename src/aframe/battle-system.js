@@ -53,9 +53,8 @@ AFRAME.registerComponent("battle-system", {
           "animation__endattack",
           "property: position; to: -13 0.01 -4.6;dur: 100; easing: linear; startEvents: end-attack;"
         );
+
         this.el.sceneEl.appendChild(pokemonEl);
-      } else {
-        console.log("No Pokemon captured to start a battle with.");
       }
     });
   },
@@ -63,13 +62,9 @@ AFRAME.registerComponent("battle-system", {
     if (!this.isPlayerTurn) return;
 
     // Logique d'attaque du joueur
-
     const enemyEl = this.el.sceneEl.querySelector("#enemy");
     const pokemonPlayer = this.el.sceneEl.querySelector("#myPokemon");
     let enemyHp = enemyEl.getAttribute("hp").currentHp;
-
-    console.log(evt.detail.attackName);
-    console.log(evt.detail);
 
     pokemonPlayer.addEventListener("animationcomplete", (evt) => {
       pokemonPlayer.emit("end-attack", null, false);
@@ -83,10 +78,7 @@ AFRAME.registerComponent("battle-system", {
     enemyHp = Math.max(enemyHp - damage, 0);
     enemyEl.setAttribute("hp", "currentHp", enemyHp);
 
-    console.log(`Enemy HP: ${enemyHp}`);
-
     if (enemyHp <= 0) {
-      console.log("Enemy Pokémon is defeated!");
       enemyEl.emit("pokemonDefeated");
       setTimeout(() => {
         enemyEl.emit("pokemonFaded");
@@ -97,12 +89,12 @@ AFRAME.registerComponent("battle-system", {
       this.endBattle();
     } else {
       this.isPlayerTurn = false; // Passer le tour à l'ennemi
-      setTimeout(() => this.el.sceneEl.emit("enemyTurn"), 1000); // Donner un délai avant le tour de l'ennemi
+      setTimeout(() => this.el.sceneEl.emit("enemyTurn"), 1500); // Donner un délai avant le tour de l'ennemi
     }
   },
 
   handleEnemyTurn: function () {
-    if (this.isPlayerTurn) return; // Si c'est le tour du joueur, ignorer
+    if (this.isPlayerTurn) return;
 
     const enemyEl = this.el.sceneEl.querySelector("#enemy");
 
@@ -116,19 +108,13 @@ AFRAME.registerComponent("battle-system", {
     // Logique d'attaque de l'ennemi
     const myPokemonEl = document.getElementById("myPokemon");
     let myPokemonHp = myPokemonEl.getAttribute("hp").currentHp;
-    const damage = 15; // Exemple de dommages infligés par l'ennemi
+    const damage = 15;
 
     setTimeout(() => {
       myPokemonHp = Math.max(myPokemonHp - damage, 0);
       myPokemonEl.setAttribute("hp", "currentHp", myPokemonHp);
 
-      console.log(`Your Pokemon HP: ${myPokemonHp}`);
-
-      // Ramener l'ennemi à sa position initiale
-      enemyEl.emit("endAttack");
-
       if (myPokemonHp <= 0) {
-        console.log("Your Pokemon is defeated!");
         this.endBattle();
       } else {
         this.isPlayerTurn = true; // Retourner le tour au joueur
@@ -141,9 +127,7 @@ AFRAME.registerComponent("battle-system", {
     const myPokemonEl = document.getElementById("myPokemon");
     myPokemonEl.setAttribute("hp", "currentHp", this.data.maxHp);
 
-    // Réinitialiser les boutons ou afficher un message de fin, selon le besoin
     const pokeballEl = document.querySelector("#entity-pokeball");
-    console.log(pokeballEl);
     if (myPokemonEl) {
       myPokemonEl.setAttribute("visible", "false"); // Masquez le Pokémon
     }
@@ -160,18 +144,13 @@ AFRAME.registerComponent("battle-system", {
   },
 
   changeMusic: function () {
-    console.log("Music changed");
-
     const battleMusic = document.getElementById("entity-battle-music");
     if (battleMusic) {
       battleMusic.components.sound.stopSound();
     }
-
-    console.log(battleMusic);
     const ptMusic = document.getElementById("entity-pt-music");
     if (ptMusic) {
       ptMusic.components.sound.playSound();
     }
-    console.log(ptMusic);
   },
 });
